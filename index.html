@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CEJUSC - Solicitação de Serviços</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚖️ CEJUSC ITINERANTE ⚖️</h1>
+            <p>Centro Judiciário de Solução de Conflitos e Cidadania</p>
+        </div>
+
+        <div class="form-content">
+            <form id="cejuscForm">
+                
+                <!-- Seleção do Tipo de Serviço -->
+                <div class="form-group">
+                    <label>Selecione o tipo de serviço solicitado: </label>
+                    <div class="tipo-servico">
+                        <div class="servico-item">
+                            <input type="radio" id="divorcio" name="tipoServico" value="divorcio" required>
+                            <label for="divorcio">Divórcio</label>
+                        </div>
+                        <div class="servico-item">
+                            <input type="radio" id="srp" name="tipoServico" value="srp" required>
+                            <label for="srp">Serviço de Reconhecimento de Paternidade</label>
+                        </div>
+                        <div class="servico-item">
+                            <input type="radio" id="casamento" name="tipoServico" value="casamento" required>
+                            <label for="casamento">Casamento</label>
+                        </div>
+                        <div class="servico-item">
+                            <input type="radio" id="pensao" name="tipoServico" value="pensao" required>
+                            <label for="pensao">Pensão Alimenticia</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Selecione a data e horário preferido:</label>
+                    <div class="dados-grid">
+                        <div class="form-group">
+                            <label for="data_preferida">Data: </label>
+                            <input type="date" id="data_preferida" name="data_preferida" required>
+                            <div class="error" id="data_preferida-error">Selecione uma data</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="hora_preferida">Horário: </label>
+                            <input type="time" id="hora_preferida" name="hora_preferida" min="08:00" max="18:00" required>
+                            <div class="error" id="hora_preferida-error">Selecione um horário</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção Divórcio -->
+                <div id="secao-divorcio" class="section form-group hidden">
+                    <h3>Dados para Divórcio</h3>
+                    
+                    <div class="dados-grid">
+                        <!-- Dados do Solicitante -->
+                        <div>
+                            <h4 class="subtitle">👤 Solicitante</h4>
+                            
+                            <div class="form-group">
+                                <label for="solicitante_nome">Nome Completo: </label>
+                                <input type="text" id="solicitante_nome" name="solicitante_nome">
+                                <div class="error" id="solicitante_nome-error">Nome é obrigatório</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="solicitante_telefone">Telefone: </label>
+                                <input type="tel" id="solicitante_telefone" name="solicitante_telefone" placeholder="(34) 99999-9999">
+                                <div class="error" id="solicitante_telefone-error">Telefone é obrigatório</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="solicitante_email">E-mail: </label>
+                                <input type="email" id="solicitante_email" name="solicitante_email">
+                                <div class="error" id="solicitante_email-error">E-mail válido é obrigatório</div>
+                            </div>
+                        </div>
+
+                        <!-- Dados do Solicitado -->
+                        <div>
+                            <h4 class="subtitle">👥 Solicitado</h4>
+                            
+                            <div class="form-group">
+                                <label for="solicitado_nome">Nome Completo: </label>
+                                <input type="text" id="solicitado_nome" name="solicitado_nome">
+                                <div class="error" id="solicitado_nome-error">Nome é obrigatório</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="solicitado_telefone">Telefone: </label>
+                                <input type="tel" id="solicitado_telefone" name="solicitado_telefone" placeholder="(34) 99999-9999">
+                                <div class="error" id="solicitado_telefone-error">Telefone é obrigatório</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="solicitado_email">E-mail: </label>
+                                <input type="email" id="solicitado_email" name="solicitado_email">
+                                <div class="error" id="solicitado_email-error">E-mail válido é obrigatório</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Lista de Documentos -->
+                    <div class="info-box">
+                        <h4>📄 Documentos necessários para divórcio</h4>
+                        <ul>
+                            <li>Certidão de casamento atualizada</li>
+                            <li>RG e CPF de ambos os cônjuges</li>
+                            <li>Certidão de nascimento dos filhos (se houver)</li>
+                            <li>Documentação dos bens móveis e imóveis (se houver)</li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div id="secao-srp" class="section form-group hidden">
+                    <h3>Dados para Reconhecimento de Paternidade</h3>
+                    
+                    <div class="dados-grid">
+                        <!-- Dados do Solicitante (Pai/Mãe) -->
+                        <div>
+                            <h4 class="subtitle">👤 Solicitante</h4>
+                            
+                            <div class="form-group">
+                                <label for="srp_solicitante_nome">Nome Completo: </label>
+                                <input type="text" id="srp_solicitante_nome" name="srp_solicitante_nome">
+                                <div class="error" id="srp_solicitante_nome-error">Nome é obrigatório</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="srp_solicitante_telefone">Telefone: </label>
+                                <input type="tel" id="srp_solicitante_telefone" name="srp_solicitante_telefone" placeholder="(34) 99999-9999">
+                                <div class="error" id="srp_solicitante_telefone-error">Telefone é obrigatório</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="srp_solicitante_email">E-mail: </label>
+                                <input type="email" id="srp_solicitante_email" name="srp_solicitante_email">
+                                <div class="error" id="srp_solicitante_email-error">E-mail válido é obrigatório</div>
+                            </div>
+                        </div>
+
+                        <!-- Dados do Solicitado -->
+                        <div>
+                            <h4 class="subtitle">👥 Solicitado</h4>
+                            
+                            <div class="form-group">
+                                <label for="srp_solicitado_nome">Nome Completo: </label>
+                                <input type="text" id="srp_solicitado_nome" name="srp_solicitado_nome">
+                                <div class="error" id="srp_solicitado_nome-error">Nome é obrigatório</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="srp_solicitado_telefone">Telefone: </label>
+                                <input type="tel" id="srp_solicitado_telefone" name="srp_solicitado_telefone" placeholder="(34) 99999-9999">
+                                <div class="error" id="srp_solicitado_telefone-error">Telefone é obrigatório</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="srp_solicitado_email">E-mail: </label>
+                                <input type="email" id="srp_solicitado_email" name="srp_solicitado_email">
+                                <div class="error" id="srp_solicitado_email-error">E-mail válido é obrigatório</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <h4>📄 Documentos necessários para o Serviço de Reconhecimento de Paternidade</h4>
+                        <ul>
+                            <li>RG e CPF das partes</li>
+                            <li>Certidão de nascimento dos filhos (obrigatório)</li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div id="secao-casamento" class="section form-group hidden">
+                    <h3>Dados para Casamento</h3>
+                    
+                    <div class="dados-grid">
+                        <!-- Dados do Solicitante 1 -->
+                        <div>
+                            <h4 class="subtitle">💍 Solicitante 1</h4>
+                            
+                            <div class="form-group">
+                                <label for="casamento_solicitante1_nome">Nome Completo: </label>
+                                <input type="text" id="casamento_solicitante1_nome" name="casamento_solicitante1_nome">
+                                <div class="error" id="casamento_solicitante1_nome-error">Nome é obrigatório</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="casamento_solicitante1_telefone">Telefone: </label>
+                                <input type="tel" id="casamento_solicitante1_telefone" name="casamento_solicitante1_telefone" placeholder="(34) 99999-9999">
+                                <div class="error" id="casamento_solicitante1_telefone-error">Telefone é obrigatório</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="casamento_solicitante1_email">E-mail: </label>
+                                <input type="email" id="casamento_solicitante1_email" name="casamento_solicitante1_email">
+                                <div class="error" id="casamento_solicitante1_email-error">E-mail válido é obrigatório</div>
+                            </div>
+                        </div>
+
+                        <!-- Dados do Solicitante 2 -->
+                        <div>
+                            <h4 class="subtitle">💍 Solicitante 2</h4>
+                            
+                            <div class="form-group">
+                                <label for="casamento_solicitante2_nome">Nome Completo: </label>
+                                <input type="text" id="casamento_solicitante2_nome" name="casamento_solicitante2_nome">
+                                <div class="error" id="casamento_solicitante2_nome-error">Nome é obrigatório</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="casamento_solicitante2_telefone">Telefone: </label>
+                                <input type="tel" id="casamento_solicitante2_telefone" name="casamento_solicitante2_telefone" placeholder="(34) 99999-9999">
+                                <div class="error" id="casamento_solicitante2_telefone-error">Telefone é obrigatório</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="casamento_solicitante2_email">E-mail: </label>
+                                <input type="email" id="casamento_solicitante2_email" name="casamento_solicitante2_email">
+                                <div class="error" id="casamento_solicitante2_email-error">E-mail válido é obrigatório</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Testemunhas -->
+                    <div class="dados-grid" style="margin-top: 25px;">
+                        <!-- Testemunha 1 -->
+                        <div>
+                            <h4 class="subtitle">👥 Testemunha 1</h4>
+                            
+                            <div class="form-group">
+                                <label for="casamento_testemunha1_nome">Nome Completo: </label>
+                                <input type="text" id="casamento_testemunha1_nome" name="casamento_testemunha1_nome">
+                                <div class="error" id="casamento_testemunha1_nome-error">Nome é obrigatório</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="casamento_testemunha1_telefone">Telefone: </label>
+                                <input type="tel" id="casamento_testemunha1_telefone" name="casamento_testemunha1_telefone" placeholder="(34) 99999-9999">
+                                <div class="error" id="casamento_testemunha1_telefone-error">Telefone é obrigatório</div>
+                            </div>
+
+                        </div>
+
+                        <!-- Testemunha 2 -->
+                        <div>
+                            <h4 class="subtitle">👥 Testemunha 2</h4>
+                            
+                            <div class="form-group">
+                                <label for="casamento_testemunha2_nome">Nome Completo: </label>
+                                <input type="text" id="casamento_testemunha2_nome" name="casamento_testemunha2_nome">
+                                <div class="error" id="casamento_testemunha2_nome-error">Nome é obrigatório</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="casamento_testemunha2_telefone">Telefone: </label>
+                                <input type="tel" id="casamento_testemunha2_telefone" name="casamento_testemunha2_telefone" placeholder="(34) 99999-9999">
+                                <div class="error" id="casamento_testemunha2_telefone-error">Telefone é obrigatório</div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Lista de Documentos Casamento -->
+                    <div class="info-box">
+                        <h4>📄 Documentos necessários para Casamento</h4>
+                        <ul>
+                            <li>RG e CPF de ambos as partes</li>
+                            <li>Certidão de estado civil atualizada das partes</li>
+                            <li>Documentação dos filhos (se houver)</li>
+                            <li>Comprovante de endereço</li>
+                        </ul>
+                        <br>
+                        <h4>📄 Documentos necessários para testemunhas</h4>
+                        <ul>
+                            <li>RG e CPF</li>
+                            <li>Comprovante de endereço</li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div id="secao-pensao" class="section form-group hidden">
+                    <h3>Dados para Pensão Alimentícia</h3>
+                    
+                    <div class="dados-grid">
+                        <!-- Dados do Solicitante -->
+                        <div>
+                            <h4 class="subtitle">👤 Solicitante</h4>
+                            
+                            <div class="form-group">
+                                <label for="pensao_solicitante_nome">Nome Completo: </label>
+                                <input type="text" id="pensao_solicitante_nome" name="pensao_solicitante_nome">
+                                <div class="error" id="pensao_solicitante_nome-error">Nome é obrigatório</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="pensao_solicitante_telefone">Telefone: </label>
+                                <input type="tel" id="pensao_solicitante_telefone" name="pensao_solicitante_telefone" placeholder="(34) 99999-9999">
+                                <div class="error" id="pensao_solicitante_telefone-error">Telefone é obrigatório</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="pensao_solicitante_email">E-mail: </label>
+                                <input type="email" id="pensao_solicitante_email" name="pensao_solicitante_email">
+                                <div class="error" id="pensao_solicitante_email-error">E-mail válido é obrigatório</div>
+                            </div>
+                        </div>
+
+                        <!-- Dados do Solicitado -->
+                        <div>
+                            <h4 class="subtitle">👥 Solicitado</h4>
+                            
+                            <div class="form-group">
+                                <label for="pensao_solicitado_nome">Nome Completo: </label>
+                                <input type="text" id="pensao_solicitado_nome" name="pensao_solicitado_nome">
+                                <div class="error" id="pensao_solicitado_nome-error">Nome é obrigatório</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="pensao_solicitado_telefone">Telefone: </label>
+                                <input type="tel" id="pensao_solicitado_telefone" name="pensao_solicitado_telefone" placeholder="(34) 99999-9999">
+                                <div class="error" id="pensao_solicitado_telefone-error">Telefone é obrigatório</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="pensao_solicitado_email">E-mail: </label>
+                                <input type="email" id="pensao_solicitado_email" name="pensao_solicitado_email">
+                                <div class="error" id="pensao_solicitado_email-error">E-mail válido é obrigatório</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Lista de Documentos Pensão -->
+                    <div class="info-box">
+                        <h4>📄 Documentos necessários para Pensão Alimenticia</h4>
+                        <ul>
+                            <li>RG e CPF de ambos as partes</li>
+                            <li>Certidão de nascimento dos filhos (obrigatório)</li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <!-- Contato CEJUSC -->
+                <div class="contato-box">
+                    <h4>📞 Contato CEJUSC</h4>
+                    <p>(34) 3228-0240 (Whatsapp)</p>
+                    <p>(34) 3228-8364 (Fixo)</p>
+                    <p style="font-size: 0.9em; margin-top: 5px;">Horário: Segunda a Sexta, 09h às 18h</p>
+                </div>
+
+                <!-- Loading e Success -->
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Enviando solicitação...</p>
+                </div>
+
+                <div class="success-message" id="success">
+                    ✅ Solicitação enviada com sucesso! Entraremos em contato em breve.
+                </div>
+
+                <button type="submit" class="submit-btn" id="submit-btn">
+                    Enviar Solicitação
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
