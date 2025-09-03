@@ -1,6 +1,6 @@
 const CONFIG = {
     // SUBSTITUA ESTA URL PELA URL DO SEU GOOGLE APPS SCRIPT
-    SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbzReo7hc5ljKOFzE_6noNgqQCcYIn3ul4qsTrEejM6IJaMHCuKV96SfAl2WwXMf5s4/exec'
+    SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbz5RVtFKT6MDLiHAJKfMrvaSmJ28pS_GPGgw2wunWHexHeuzf1an_brpSL2LFVfFLjl/exec'
 };
 
 // Elementos DOM
@@ -180,28 +180,66 @@ function validarFormulario() {
 // Validar campos específicos do divórcio
 function validarCamposDivorcio() {
     const camposObrigatorios = [
-        'solicitante_nome', 'solicitante_telefone', 'solicitante_email',
-        'solicitado_nome', 'solicitado_telefone', 'solicitado_email'
+        'solicitante_nome', 
+        'solicitante_telefone', 
+        'solicitante_email',
+        'solicitado_nome', 
+        'solicitado_telefone' 
     ];
+
+    let valido = validarCamposGeral(camposObrigatorios);
+    
+    const emailSolicitado = document.getElementById('solicitado_email');
+
+    if (emailSolicitado && emailSolicitado.value.trim()) {
+        if (!validarEmail(emailSolicitado.value)) {
+            mostrarErroInput(emailSolicitado, document.getElementById('solicitado_email-error'));
+            valido = false;
+        } else {
+            ocultarErroInput(emailSolicitado, document.getElementById('solicitado_email-error'));
+        }
+    }
 
     return validarCamposGeral(camposObrigatorios);
 }
 
 function validarCamposSRP() {
     const camposObrigatorios = [
-        'srp_solicitante_nome', 'srp_solicitante_telefone', 'srp_solicitante_email',
-        'srp_solicitado_nome', 'srp_solicitado_telefone', 'srp_solicitado_email'
+        'srp_solicitante_nome', 
+        'srp_solicitante_telefone', 
+        'srp_solicitante_email',
+        'srp_solicitado_nome', 
+        'srp_solicitado_telefone' 
     ];
+
+    let valido = validarCamposGeral(camposObrigatorios);
+    
+    const emailSolicitado = document.getElementById('srp_solicitado_email');
+
+    if (emailSolicitado && emailSolicitado.value.trim()) {
+        if (!validarEmail(emailSolicitado.value)) {
+            mostrarErroInput(emailSolicitado, document.getElementById('srp_solicitado_email-error'));
+            valido = false;
+        } else {
+            ocultarErroInput(emailSolicitado, document.getElementById('srp_solicitado_email-error'));
+        }
+    }
 
     return validarCamposGeral(camposObrigatorios);
 }
 
 function validarCamposCasamento() {
     const camposObrigatorios = [
-        'casamento_solicitante1_nome', 'casamento_solicitante1_telefone', 'casamento_solicitante1_email',
-        'casamento_solicitante2_nome', 'casamento_solicitante2_telefone', 'casamento_solicitante2_email',
-        'casamento_testemunha1_nome', 'casamento_testemunha1_telefone',
-        'casamento_testemunha2_nome', 'casamento_testemunha2_telefone',
+        'casamento_solicitante1_nome', 
+        'casamento_solicitante1_telefone', 
+        'casamento_solicitante1_email',
+        'casamento_solicitante2_nome', 
+        'casamento_solicitante2_telefone', 
+        'casamento_solicitante2_email',
+        'casamento_testemunha1_nome', 
+        'casamento_testemunha1_telefone',
+        'casamento_testemunha2_nome', 
+        'casamento_testemunha2_telefone'
     ];
 
     return validarCamposGeral(camposObrigatorios);
@@ -209,11 +247,83 @@ function validarCamposCasamento() {
 
 function validarCamposPensao() {
     const camposObrigatorios = [
-        'pensao_solicitante_nome', 'pensao_solicitante_telefone', 'pensao_solicitante_email',
-        'pensao_solicitado_nome', 'pensao_solicitado_telefone', 'pensao_solicitado_email'
+        'pensao_solicitante_nome', 
+        'pensao_solicitante_telefone', 
+        'pensao_solicitante_email',
+        'pensao_solicitado_nome', 
+        'pensao_solicitado_telefone'
     ];
 
+    let valido = validarCamposGeral(camposObrigatorios);
+    
+    const emailSolicitado = document.getElementById('pensao_solicitado_email');
+    if (emailSolicitado && emailSolicitado.value.trim()) {
+        if (!validarEmail(emailSolicitado.value)) {
+            mostrarErroInput(emailSolicitado, document.getElementById('pensao_solicitado_email-error'));
+            valido = false;
+        } else {
+            ocultarErroInput(emailSolicitado, document.getElementById('pensao_solicitado_email-error'));
+        }
+    }
+
     return validarCamposGeral(camposObrigatorios);
+}
+
+function validarEmailOpcional(idCampo) {
+    const campo = document.getElementById(idCampo);
+    const errorElement = document.getElementById(idCampo + '-error');
+    
+    if (!campo) return true;
+    
+    const email = campo.value.trim();
+    
+    // Se está vazio, é válido (opcional)
+    if (!email) {
+        ocultarErroInput(campo, errorElement);
+        return true;
+    }
+    
+    // Se tem conteúdo, deve ser email válido
+    if (validarEmail(email)) {
+        ocultarErroInput(campo, errorElement);
+        return true;
+    } else {
+        mostrarErroInput(campo, errorElement);
+        return false;
+    }
+}
+
+function validarCamposDivorcioLimpo() {
+    const obrigatorios = ['solicitante_nome', 'solicitante_telefone', 'solicitante_email', 'solicitado_nome', 'solicitado_telefone'];
+    const opcionais = ['solicitado_email'];
+    
+    return validarCamposGeral(obrigatorios) && validarEmailsOpcionais(opcionais);
+}
+
+function validarCamposSRPLimpo() {
+    const obrigatorios = ['srp_solicitante_nome', 'srp_solicitante_telefone', 'srp_solicitante_email', 'srp_solicitado_nome', 'srp_solicitado_telefone'];
+    const opcionais = ['srp_solicitado_email'];
+    
+    return validarCamposGeral(obrigatorios) && validarEmailsOpcionais(opcionais);
+}
+
+function validarCamposPensaoLimpo() {
+    const obrigatorios = ['pensao_solicitante_nome', 'pensao_solicitante_telefone', 'pensao_solicitante_email', 'pensao_solicitado_nome', 'pensao_solicitado_telefone'];
+    const opcionais = ['pensao_solicitado_email'];
+    
+    return validarCamposGeral(obrigatorios) && validarEmailsOpcionais(opcionais);
+}
+
+function validarEmailsOpcionais(camposOpcionais) {
+    let valido = true;
+    
+    camposOpcionais.forEach(campo => {
+        if (!validarEmailOpcional(campo)) {
+            valido = false;
+        }
+    });
+    
+    return valido;
 }
 
 function validarCamposGeral(camposObrigatorios) {
